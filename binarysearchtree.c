@@ -63,7 +63,7 @@ void search(int val){
             curr = curr->llink;
         }
     }
-    if(curr->data == val){
+    if(curr!=NULL  && curr->data == val){
         printf("The value is found");
     }else{
         printf("The values is not found in the bst");
@@ -101,4 +101,6 @@ int main(){
     display_in(root);
     printf("\nThe binary tree preorder traversal is\n");
     display_pre_1(root);
+    search(20);
+    search(10);
 }
