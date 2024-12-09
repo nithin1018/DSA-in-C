@@ -89,6 +89,58 @@ void display_pre_1(node *root){
         }
     }
 }
+void delete(int item){
+    node *par = NULL;
+    node *curr = root;
+    node *parsucc,*insucc,*subtree;
+    while(curr != NULL){
+        if(curr->data == item){
+            break;
+        }else{
+            par = curr;
+            if(item<curr->data){
+                curr = curr->llink;
+            }else{
+                curr = curr->rlink;
+            }
+        }
+    }
+    if(curr == NULL){
+        printf("No such node in the tree");
+    }else{
+        if(curr->llink!=NULL && curr->rlink!=NULL){
+            parsucc = curr;
+            insucc = curr->rlink;
+        while(insucc->llink !=NULL){
+            parsucc = insucc;
+            insucc = insucc->llink;
+        }
+        curr->data = insucc->data;
+        if(parsucc!=curr){
+            parsucc->llink = insucc->rlink;
+        }else{
+            parsucc->rlink = insucc->rlink;
+        }
+        free(insucc);
+        }else{
+            if(curr->llink == NULL){
+                subtree = curr->rlink;
+            }else{
+                subtree = curr->llink;
+            }
+            if(par == NULL){
+                root = subtree;
+            }else{
+                if(curr == par->llink){
+                    par->llink = subtree;
+                }else{
+                    par->rlink = subtree;
+                }
+                free(curr);
+            }
+        }
+    }
+}
 int main(){
     int val = 1;
     while(val!=-1){
@@ -97,6 +149,7 @@ int main(){
         if(val != -1)
         insert(val);
     }
+    delete(10);
     printf("The binary tree inorder traversal is \n");
     display_in(root);
     printf("\nThe binary tree preorder traversal is\n");
